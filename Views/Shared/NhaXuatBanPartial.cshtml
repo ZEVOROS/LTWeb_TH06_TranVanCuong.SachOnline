@@ -1,0 +1,18 @@
+﻿@model IEnumerable<TranVanCuong.SachOnline.Models.NHAXUATBAN>
+
+<ul class="list-group">
+    <li class="list-group-item active" style="font-weight:bold;text-align:center">
+        SÁCH THEO NHÀ XUẤT BẢN
+    </li>
+
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">
+            <a href="@Url.Action("SachTheoNhaXuatBan", 
+                    "SachOnline", 
+                    new { id = item.MaNXB })">
+                @item.TenNXB
+            </a>
+        </li>
+    }
+</ul>

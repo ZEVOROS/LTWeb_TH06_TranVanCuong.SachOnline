@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TranVanCuong.SachOnline.Models.SACH>
+
+@{
+    ViewBag.Title = "TRANG CHỦ";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 class="text-center">SÁCH MỚI</h2>
+<hr />
+
+<div class="row text-center">
+
+    @foreach (var sach in Model)
+    {
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <div class="thumbnail">
+
+                <img src="~/Images/@sach.AnhBia"
+                     class="img-rounded imgbook"
+                     alt="@sach.TenSach" />
+
+                <div class="caption">
+
+                    <h4 style="min-height:60px;">
+                        <a href="@Url.Action("BookDetail","SachOnline",
+                        new { id = sach.MaSach })">
+                            @sach.TenSach
+                        </a>
+                    </h4>
+
+                    <p>
+                        <a href="#"
+                           class="btn btn-primary">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            Add to Cart
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    }
+
+</div>
+
+<nav class="text-center">
+    <ul class="pagination">
+        <li><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+</nav>
+
+@section SachBanNhieu
+{
+    @Html.Action("SachBanNhieuPartial", "SachOnline")
+}

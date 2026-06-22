@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>SachOnline</title>
+
+    @Styles.Render("~/Content/css")
+
+    <style>
+        body {
+            font-size: 13px;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 960px;
+        }
+
+        .navbar {
+            border-radius: 0;
+            margin-bottom: 0;
+            min-height: 42px;
+        }
+
+        .carousel {
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 230px !important;
+            object-fit: cover;
+        }
+
+        .list-group-item {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+
+            .list-group-item.active {
+                text-align: center;
+                font-weight: bold;
+                background-color: #337ab7;
+                border-color: #337ab7;
+            }
+
+        h2.text-center {
+            font-size: 24px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .thumbnail {
+            height: 330px;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .imgbook {
+            width: 155px !important;
+            height: 215px !important;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .thumbnail h3 {
+            font-size: 18px;
+            margin: 8px 0 5px;
+        }
+
+        .thumbnail p {
+            font-size: 11px;
+            margin-bottom: 7px;
+        }
+        .thumbnail .caption h4 {
+            min-height: 55px;
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.3;
+            font-weight: normal;
+        }
+
+            .thumbnail .caption h4 a {
+                color: #333;
+                text-decoration: none;
+            }
+
+                .thumbnail .caption h4 a:hover {
+                    color: #337ab7;
+                    text-decoration: none;
+                }
+
+        .thumbnail {
+            height: 330px;
+            overflow: hidden;
+        }
+
+        .imgbook {
+            width: 145px !important;
+            height: 200px !important;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn {
+            font-size: 11px;
+            padding: 4px 8px;
+        }
+
+        .pagination {
+            margin-top: 5px;
+            margin-bottom: 30px;
+        }
+
+        .imgsachbannhieu {
+            width: 80px !important;
+            height: 110px !important;
+            float: left;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .sachbannhieu-item {
+            min-height: 130px;
+            margin-bottom: 15px;
+        }
+
+            .sachbannhieu-item h4 {
+                margin-top: 0;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .sachbannhieu-item p {
+                font-size: 12px;
+                text-align: justify;
+            }
+    </style>
+</head>
+
+<body>
+
+    @Html.Action("NavPartial", "SachOnline")
+
+    <div class="container">
+        @Html.Action("SliderPartial", "SachOnline")
+
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                @Html.Action("ChuDePartial", "SachOnline")
+                <br />
+                @Html.Action("NhaXuatBanPartial", "SachOnline")
+            </div>
+
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                @RenderBody()
+            </div>
+        </div>
+
+        <hr />
+
+        @RenderSection("SachBanNhieu", required: false)
+
+        <hr />
+        @Html.Action("FooterPartial", "SachOnline")
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
