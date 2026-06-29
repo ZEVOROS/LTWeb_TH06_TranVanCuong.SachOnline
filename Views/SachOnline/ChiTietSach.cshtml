@@ -1,0 +1,137 @@
+﻿@model TranVanCuong.SachOnline.Models.SACH
+
+@{
+    ViewBag.Title = "Chi tiết sách";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .book-detail-box {
+        margin-top: 20px;
+        padding: 25px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+    }
+
+    .book-title {
+        color: #c0392b;
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+    }
+
+    .book-cover {
+        width: 280px;
+        max-height: 380px;
+        object-fit: cover;
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: #fff;
+    }
+
+    .book-info p {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 10px;
+    }
+
+    .book-label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .book-description {
+        text-align: justify;
+        margin-top: 15px;
+    }
+
+    .book-detail img {
+        max-width: 100%;
+    }
+
+    .book-detail p {
+        font-size: 16px;
+    }
+
+    .book-price {
+        color: #e74c3c;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .btn-add-cart {
+        margin-top: 15px;
+        padding: 10px 25px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="book-detail-box">
+
+    <h2 class="book-title">
+        @Model.TenSach
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-4 text-center">
+            <img src="~/Images/@Model.AnhBia"
+                 class="img-thumbnail"
+                 style="width:260px;height:360px;object-fit:cover;" />
+        </div>
+
+        <div class="col-md-8">
+
+            <h2 style="color:#c0392b;font-weight:bold">
+                @Model.TenSach
+            </h2>
+
+            <hr />
+
+            <p>
+                <strong>Chủ đề:</strong>
+                @Model.CHUDE.TenChuDe
+            </p>
+
+            <p>
+                <strong>Nhà xuất bản:</strong>
+                @Model.NHAXUATBAN.TenNXB
+            </p>
+
+            <p>
+                <strong>Ngày cập nhật:</strong>
+                @Html.FormatValue(Model.NgayCapNhat, "{0:dd/MM/yyyy}")
+            </p>
+
+            <p>
+                <strong>Giá bán:</strong>
+
+                <span style="color:red;font-size:28px;font-weight:bold">
+                    @Html.FormatValue(Model.GiaBan, "{0:#,##0}") VNĐ
+                </span>
+            </p>
+
+            <hr />
+
+            <h4>Mô tả</h4>
+
+            <p style="text-align:justify;line-height:30px;">
+                @Html.Raw(Model.MoTa.Replace("\n", "<br/>"))
+            </p>
+
+            <br />
+
+            <a href="@Url.Action("ThemGioHang", "GioHang", new { ms = Model.MaSach, url = Request.Url.ToString() })"
+               class="btn btn-primary">
+                Add to Cart
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

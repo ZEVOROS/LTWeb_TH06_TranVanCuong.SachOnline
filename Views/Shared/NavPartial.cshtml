@@ -1,32 +1,60 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">SachOnline</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <a class="navbar-brand" href="@Url.Action("Index","SachOnline")">SachOnline</a>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/SachOnline/Index">Trang chủ</a>
+                    <a class="nav-link active" href="@Url.Action("Index","SachOnline")">Trang chủ</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Giới thiệu</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Liên hệ</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sách theo chủ đề</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sách theo nhà xuất bản</a>
                 </li>
             </ul>
+
             <form class="d-flex" method="get" action="/SachOnline/TimKiem">
                 <input class="form-control me-2" type="search" placeholder="Tìm kiếm" name="query">
                 <button class="btn btn-outline-light" type="submit">Tìm</button>
             </form>
+
+            <div class="d-flex align-items-center ms-3">
+                @if (Session["TaiKhoan"] == null)
+                {
+                    <a href="@Url.Action("DangKy","User")" class="btn btn-success me-2">
+                        Đăng ký
+                    </a>
+
+                    <a href="@Url.Action("DangNhap","User")" class="btn btn-primary">
+                        Đăng nhập
+                    </a>
+                }
+                else
+                {
+                    TranVanCuong.SachOnline.Models.KHACHHANG kh =
+                        (TranVanCuong.SachOnline.Models.KHACHHANG)Session["TaiKhoan"];
+
+                    <span class="text-white me-3">
+                        Xin chào: <b>@kh.HoTen</b>
+                    </span>
+
+                    <a href="@Url.Action("DangXuat","User")" class="btn btn-danger">
+                        Đăng xuất
+                    </a>
+                }
+            </div>
         </div>
     </div>
 </nav>

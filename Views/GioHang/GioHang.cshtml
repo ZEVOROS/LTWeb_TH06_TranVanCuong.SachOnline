@@ -1,0 +1,78 @@
+﻿@model List<TranVanCuong.SachOnline.Models.GioHang>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 style="text-align:center;">THÔNG TIN GIỎ HÀNG</h2>
+
+<table border="1" class="table table-bordered">
+    <tr style="background-color:#9ca1a4; font-weight:bold; text-align:center;">
+        <td>Mã sách</td>
+        <td>Tên sách</td>
+        <td>Ảnh bìa</td>
+        <td>Số lượng</td>
+        <td>Đơn giá</td>
+        <td>Thành tiền</td>
+        <td>Chi tiết</td>
+        <td>Xóa</td>
+        <td>Cập nhật</td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td align="center">@item.iMaSach</td>
+            <td>@item.sTenSach</td>
+            <td align="center">
+                <img src="~/Images/@item.sAnhBia" style="width:100px;" />
+            </td>
+
+            @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { iMaSach = item.iMaSach }))
+            {
+                <td align="center">
+                    <input type="number" min="1" name="txtSoLuong" value="@item.iSoLuong" style="width:70px;" />
+                </td>
+                <td align="center">@string.Format("{0:#,##0}", item.dDonGia) VNĐ</td>
+                <td align="center">@string.Format("{0:#,##0}", item.dThanhTien) VNĐ</td>
+                <td>
+                    <a href="@Url.Action("ChiTietSach", "SachOnline", new { id = item.iMaSach })">Chi tiết</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Xóa", "XoaGioHang", new { iMaSach = item.iMaSach })
+                </td>
+                <td>
+                    <input type="submit" value="Cập nhật" class="btn btn-warning btn-sm" />
+                </td>
+            }
+        </tr>
+    }
+
+    <tr>
+        <td colspan="4" style="text-align:right; color:red; font-weight:bold;">
+            Tổng số lượng: @ViewBag.TongSoLuong
+        </td>
+        <td colspan="5" style="text-align:center; color:red; font-weight:bold;">
+            Tổng tiền: @string.Format("{0:#,##0}", ViewBag.TongTien) VNĐ
+        </td>
+    </tr>
+    <tr style="font-weight:bold; text-align:right;">
+        <td colspan="9">
+            @Html.ActionLink("Xóa giỏ hàng", "XoaTatCaGioHang")
+        </td>
+    </tr>
+    <tr>
+        <td colspan="9" style="text-align:center">
+            @Html.ActionLink(
+                "ĐẶT HÀNG",
+                "DatHang",
+                "GioHang",
+                null,
+                new { @class = "btn btn-success" })
+        </td>
+    </tr>
+
+
+
+</table>

@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    tr {
+        height: 40px;
+    }
+
+    .error {
+        color: red;
+    }
+</style>
+
+<h4 style="color:red; text-align:center;">@ViewBag.ThongBao</h4>
+
+<h2 style="text-align:center">ĐĂNG KÝ THÀNH VIÊN</h2>
+
+<table align="center">
+    @using (Html.BeginForm("DangKy", "User"))
+    {
+        @Html.ValidationSummary(true)
+
+        <tr>
+            <td>Họ tên:</td>
+            <td>
+                @Html.TextBox("HoTen")
+                <span class="error">@ViewData["err1"]</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Tên đăng nhập:</td>
+            <td>
+                @Html.TextBox("TenDN")
+                <span class="error">@ViewData["err2"]</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Mật khẩu:</td>
+            <td>
+                @Html.Password("MatKhau")
+                <span class="error">@ViewData["err3"]</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Mật khẩu nhập lại:</td>
+            <td>
+                @Html.Password("MatKhauNL")
+                <span class="error">@ViewData["err4"]</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Email:</td>
+            <td>
+                @Html.TextBox("Email")
+                <span class="error">@ViewData["err5"]</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Điện thoại:</td>
+            <td>
+                @Html.TextBox("DienThoai")
+                <span class="error">@ViewData["err6"]</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Ngày sinh:</td>
+            <td>
+                <input type="date" name="NgaySinh" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>Địa chỉ:</td>
+            <td>
+                <input type="text" name="DiaChi" />
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Đăng ký" />
+                <input type="reset" value="Xóa thông tin" />
+            </td>
+        </tr>
+     }
+</table>

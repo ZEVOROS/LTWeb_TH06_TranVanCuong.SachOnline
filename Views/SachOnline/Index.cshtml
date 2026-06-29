@@ -22,16 +22,15 @@
                 <div class="caption">
 
                     <h4 style="min-height:60px;">
-                        <a href="@Url.Action("BookDetail","SachOnline",
+                        <a href="@Url.Action("ChiTietSach","SachOnline",
                         new { id = sach.MaSach })">
                             @sach.TenSach
                         </a>
                     </h4>
 
                     <p>
-                        <a href="#"
+                        <a href="@Url.Action("ThemGioHang", "GioHang", new { ms = sach.MaSach, url = Request.Url.ToString() })"
                            class="btn btn-primary">
-                            <span class="glyphicon glyphicon-shopping-cart"></span>
                             Add to Cart
                         </a>
                     </p>

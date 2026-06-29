@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using TranVanCuong.SachOnline.Models;
 
-namespace SachOnline.Controllers
+namespace TranVanCuong.SachOnline.Controllers
 {
     public class SachOnlineController : Controller
     {
@@ -25,9 +25,7 @@ namespace SachOnline.Controllers
 
         public ActionResult ChuDePartial()
         {
-            var listChuDe = from cd in data.CHUDE
-                            select cd;
-
+            var listChuDe = data.CHUDE.ToList();
             return PartialView(listChuDe);
         }
 
@@ -36,7 +34,6 @@ namespace SachOnline.Controllers
             var listNXB = data.NHAXUATBAN.ToList();
             return PartialView(listNXB);
         }
-
 
         public ActionResult SachBanNhieuPartial()
         {
@@ -48,22 +45,67 @@ namespace SachOnline.Controllers
             return PartialView(listSach);
         }
 
-        public ActionResult BookDetail(int id)
+        public ActionResult ChiTietSach(int? id)
         {
+            if (id == null)
+                return RedirectToAction("Index");
+
             var sach = data.SACH.SingleOrDefault(s => s.MaSach == id);
+
+            if (sach == null)
+                return HttpNotFound();
+
             return View(sach);
         }
+
+        public ActionResult SachTheoChuDe(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index");
+
+            CHUDE cd = data.CHUDE
+                           .SingleOrDefault(n => n.MaCD == id);
+
+            ViewBag.TenChuDe = cd.TenChuDe;
+
+            var sach = data.SACH
+                           .Where(n => n.MaCD == id)
+                           .ToList();
+
+            return View(sach);
+        }
+
+        public ActionResult SachTheoNhaXuatBan(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index");
+
+            NHAXUATBAN nxb = data.NHAXUATBAN
+                                 .SingleOrDefault(n => n.MaNXB == id);
+
+            ViewBag.TenNXB = nxb.TenNXB;
+
+            var sach = data.SACH
+                           .Where(n => n.MaNXB == id)
+                           .ToList();
+
+            return View(sach);
+        }
+
         public ActionResult NavPartial()
         {
             return PartialView();
         }
+
         public ActionResult SliderPartial()
         {
             return PartialView();
         }
+
         public ActionResult FooterPartial()
         {
             return PartialView();
         }
+
     }
 }
