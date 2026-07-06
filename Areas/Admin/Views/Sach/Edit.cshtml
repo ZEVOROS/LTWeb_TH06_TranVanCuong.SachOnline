@@ -1,0 +1,144 @@
+﻿@model TranVanCuong.SachOnline.Models.SACH
+
+@{
+    ViewBag.Title = "Cập nhật sách";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="page-header">
+    <span class="glyphicon glyphicon-edit"></span>
+    CẬP NHẬT SÁCH
+</h2>
+
+@using (Html.BeginForm("Edit", "Sach", FormMethod.Post,
+    new { area = "Admin", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.MaSach)
+    @Html.HiddenFor(model => model.AnhBia)
+
+    if (ViewBag.ThongBao != null)
+    {
+        <div class="alert alert-danger">
+            @Html.Raw(ViewBag.ThongBao)
+        </div>
+    }
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <div class="form-group">
+                <label>Tên sách</label>
+                @Html.TextBoxFor(model => model.TenSach,
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Giá bán</label>
+                @Html.TextBoxFor(model => model.GiaBan,
+                    new
+                    {
+                        @class = "form-control",
+                        type = "number",
+                        min = "0"
+                    })
+            </div>
+
+            <div class="form-group">
+                <label>Mô tả</label>
+                @Html.TextAreaFor(model => model.MoTa,
+                    new
+                    {
+                        @class = "form-control",
+                        rows = "8"
+                    })
+            </div>
+
+            <div class="form-group">
+                <label>Chủ đề</label>
+                @Html.DropDownList("MaCD", null,
+                    "-- Chọn chủ đề --",
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Nhà xuất bản</label>
+                @Html.DropDownList("MaNXB", null,
+                    "-- Chọn NXB --",
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Ngày cập nhật</label>
+
+                @Html.TextBoxFor(model => model.NgayCapNhat,
+                    "{0:yyyy-MM-dd}",
+                    new
+                    {
+                        @class = "form-control",
+                        type = "date"
+                    })
+            </div>
+
+            <div class="form-group">
+                <label>Số lượng bán</label>
+
+                @Html.TextBoxFor(model => model.SoLuongBan,
+                    new
+                    {
+                        @class = "form-control",
+                        type = "number",
+                        min = "0"
+                    })
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="text-center">
+
+                <img src="@Url.Content("~/Images/" + Model.AnhBia)"
+                     class="img-thumbnail"
+                     style="max-width:250px;" />
+
+            </div>
+
+            <br />
+
+            <div class="form-group">
+
+                <label>Đổi ảnh bìa</label>
+
+                <input type="file"
+                       name="fileUpload"
+                       class="form-control" />
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr />
+
+    <button type="submit"
+            class="btn btn-success">
+
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+
+        Lưu thay đổi
+
+    </button>
+
+    <a href="@Url.Action("Index")"
+       class="btn btn-default">
+
+        Quay lại
+
+    </a>
+}

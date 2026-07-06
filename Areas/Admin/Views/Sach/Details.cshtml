@@ -1,0 +1,104 @@
+﻿@model TranVanCuong.SachOnline.Models.SACH
+
+@{
+    ViewBag.Title = "Chi tiết sách";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="page-header">
+    <span class="glyphicon glyphicon-book"></span>
+    CHI TIẾT SÁCH
+</h2>
+
+<div class="row">
+
+    <div class="col-md-4 text-center">
+
+        <img src="@Url.Content("~/Images/" + Model.AnhBia)"
+             class="img-thumbnail"
+             style="max-width:280px;" />
+
+    </div>
+
+    <div class="col-md-8">
+
+        <table class="table table-bordered table-hover">
+
+            <tr>
+                <th width="180">Mã sách</th>
+                <td>@Model.MaSach</td>
+            </tr>
+
+            <tr>
+                <th>Tên sách</th>
+                <td>@Model.TenSach</td>
+            </tr>
+
+            <tr>
+                <th>Giá bán</th>
+                <td>
+                    @String.Format("{0:0,0} VNĐ", Model.GiaBan)
+                </td>
+            </tr>
+
+            <tr>
+                <th>Số lượng bán</th>
+                <td>@Model.SoLuongBan</td>
+            </tr>
+
+            <tr>
+                <th>Ngày cập nhật</th>
+                <td>
+                    @(Model.NgayCapNhat.HasValue
+                        ? Model.NgayCapNhat.Value.ToString("dd/MM/yyyy")
+                        : "")
+                </td>
+            </tr>
+
+            <tr>
+                <th>Chủ đề</th>
+                <td>@Model.CHUDE.TenChuDe</td>
+            </tr>
+
+            <tr>
+                <th>Nhà xuất bản</th>
+                <td>@Model.NHAXUATBAN.TenNXB</td>
+            </tr>
+
+            <tr>
+                <th>Mô tả</th>
+                <td style="white-space:pre-line">
+                    @Model.MoTa
+                </td>
+            </tr>
+
+        </table>
+
+        <a href="@Url.Action("Edit", new { id = Model.MaSach })"
+           class="btn btn-primary">
+
+            <span class="glyphicon glyphicon-edit"></span>
+
+            Cập nhật
+
+        </a>
+
+        <a href="@Url.Action("Delete", new { id = Model.MaSach })"
+           class="btn btn-danger">
+
+            <span class="glyphicon glyphicon-trash"></span>
+
+            Xóa
+
+        </a>
+
+        <a href="@Url.Action("Index")"
+           class="btn btn-default">
+
+            Quay lại
+
+        </a>
+
+    </div>
+
+</div>

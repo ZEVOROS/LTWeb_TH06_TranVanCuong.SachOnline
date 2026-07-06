@@ -33,12 +33,28 @@
             <div class="d-flex align-items-center ms-3">
                 @if (Session["TaiKhoan"] == null)
                 {
-                    <a href="@Url.Action("DangKy","User")" class="btn btn-success me-2">
+                    <a href="@Url.Action("DangKy",
+                     "User",
+                     new
+                     {
+                         returnUrl = Url.Action("Index", "SachOnline")
+                     })"
+                       class="btn btn-success me-2">
+
                         Đăng ký
+
                     </a>
 
-                    <a href="@Url.Action("DangNhap","User")" class="btn btn-primary">
+                    <a href="@Url.Action("DangNhap",
+                     "User",
+                     new
+                     {
+                         returnUrl = Url.Action("Index", "SachOnline")
+                     })"
+                       class="btn btn-primary">
+
                         Đăng nhập
+
                     </a>
                 }
                 else
@@ -50,8 +66,16 @@
                         Xin chào: <b>@kh.HoTen</b>
                     </span>
 
-                    <a href="@Url.Action("DangXuat","User")" class="btn btn-danger">
+                    <a href="@Url.Action("DangXuat",
+                     "User",
+                     new
+                     {
+                         returnUrl = Request.RawUrl
+                     })"
+                       class="btn btn-danger">
+
                         Đăng xuất
+
                     </a>
                 }
             </div>

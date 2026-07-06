@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Web.Mvc;
 using TranVanCuong.SachOnline.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace TranVanCuong.SachOnline.Controllers
 {
@@ -9,18 +11,17 @@ namespace TranVanCuong.SachOnline.Controllers
     {
         SachOnlineEntities data = new SachOnlineEntities();
 
-        private List<SACH> LaySachMoi(int count)
-        {
-            return data.SACH
-                       .OrderByDescending(s => s.NgayCapNhat)
-                       .Take(count)
-                       .ToList();
-        }
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var listSachMoi = LaySachMoi(6);
-            return View(listSachMoi);
+            int pageSize = 6;
+            int pageNum = page ?? 1;
+
+            var sachMoi = data.SACH
+                             .OrderByDescending(s => s.NgayCapNhat)
+                             .ToPagedList(pageNum, pageSize);
+
+            return View(sachMoi);
         }
 
         public ActionResult ChuDePartial()
@@ -58,38 +59,42 @@ namespace TranVanCuong.SachOnline.Controllers
             return View(sach);
         }
 
-        public ActionResult SachTheoChuDe(int? id)
+        public ActionResult SachTheoChuDe(int id, int? page)
         {
             if (id == null)
-                return RedirectToAction("Index");
+            {
+                return RedirectToAction("Index", "SachOnline");
+            }
+            int pageSize = 6;
+            int pageNum = page ?? 1;
 
-            CHUDE cd = data.CHUDE
-                           .SingleOrDefault(n => n.MaCD == id);
-
-            ViewBag.TenChuDe = cd.TenChuDe;
+            ViewBag.MaCD = id;
+            ViewBag.TenCD = data.CHUDE.SingleOrDefault(cd => cd.MaCD == id).TenChuDe;
 
             var sach = data.SACH
-                           .Where(n => n.MaCD == id)
-                           .ToList();
+                           .Where(s => s.MaCD == id)
+                           .OrderBy(s => s.MaSach);
 
-            return View(sach);
+            return View(sach.ToPagedList(pageNum, pageSize));
         }
 
-        public ActionResult SachTheoNhaXuatBan(int? id)
+        public ActionResult SachTheoNhaXuatBan(int id, int? page)
         {
             if (id == null)
-                return RedirectToAction("Index");
+            {
+                return RedirectToAction("Index", "SachOnline");
+            }
+            int pageSize = 6;
+            int pageNum = page ?? 1;
 
-            NHAXUATBAN nxb = data.NHAXUATBAN
-                                 .SingleOrDefault(n => n.MaNXB == id);
-
-            ViewBag.TenNXB = nxb.TenNXB;
+            ViewBag.MaNXB = id;
+            ViewBag.TenNXB = data.NHAXUATBAN.SingleOrDefault(nxb => nxb.MaNXB == id).TenNXB;
 
             var sach = data.SACH
-                           .Where(n => n.MaNXB == id)
-                           .ToList();
+                           .Where(s => s.MaNXB == id)
+                           .OrderBy(s => s.MaSach);
 
-            return View(sach);
+            return View(sach.ToPagedList(pageNum, pageSize));
         }
 
         public ActionResult NavPartial()

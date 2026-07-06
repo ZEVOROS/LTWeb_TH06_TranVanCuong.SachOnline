@@ -1,4 +1,6 @@
-﻿@model IEnumerable<TranVanCuong.SachOnline.Models.SACH>
+﻿@using TranVanCuong.SachOnline.Models
+@using PagedList.Mvc
+@model PagedList.PagedList<SACH>
 
 @{
     ViewBag.Title = "TRANG CHỦ";
@@ -41,19 +43,28 @@
         </div>
     }
 
-</div>
+<div class="text-center">
+    <p>
+        Trang @Model.PageNumber / @Model.PageCount
+    </p>
 
-<nav class="text-center">
-    <ul class="pagination">
-        <li><a href="#">&laquo;</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-    </ul>
-</nav>
+    @Html.PagedListPager(
+            Model,
+            page => Url.Action(null, new
+            {
+                id = ViewBag.MaCD,
+                page
+            }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                MaximumPageNumbersToDisplay = 5
+            })
+</div>
+</div>
 
 @section SachBanNhieu
 {

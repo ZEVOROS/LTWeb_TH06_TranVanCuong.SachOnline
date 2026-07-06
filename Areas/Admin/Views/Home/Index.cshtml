@@ -1,0 +1,249 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Dashboard";
+}
+
+<style>
+
+    .dashboard-title {
+        margin-bottom: 35px;
+    }
+
+        .dashboard-title h2 {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 6px;
+        }
+
+        .dashboard-title p {
+            color: #6b7280;
+        }
+
+    .stat-card {
+        background: #fff;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.06);
+        transition: .25s;
+        margin-bottom: 25px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .stat-card i {
+            font-size: 42px;
+            opacity: .15;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .stat-card span {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+    .bg-book {
+        border-left: 6px solid #2563eb;
+    }
+
+    .bg-topic {
+        border-left: 6px solid #10b981;
+    }
+
+    .bg-pub {
+        border-left: 6px solid #f59e0b;
+    }
+
+    .bg-user {
+        border-left: 6px solid #ec4899;
+    }
+
+    .bg-order {
+        border-left: 6px solid #ef4444;
+    }
+
+    .welcome-card {
+        background: linear-gradient(135deg,#2563eb,#1d4ed8);
+        color: white;
+        border-radius: 15px;
+        padding: 35px;
+        margin-top: 15px;
+    }
+
+        .welcome-card h3 {
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+        .welcome-card p {
+            margin-top: 15px;
+            color: #e5e7eb;
+            line-height: 28px;
+        }
+
+    .quick-menu {
+        margin-top: 30px;
+    }
+
+        .quick-menu h4 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+    .quick-item {
+        display: block;
+        padding: 15px 18px;
+        background: #fff;
+        border-radius: 12px;
+        color: #374151;
+        text-decoration: none;
+        margin-bottom: 15px;
+        box-shadow: 0 3px 12px rgba(0,0,0,.05);
+        transition: .2s;
+    }
+
+        .quick-item:hover {
+            text-decoration: none;
+            color: #2563eb;
+            transform: translateX(5px);
+        }
+</style>
+
+<div class="dashboard-title">
+
+    <h2>Dashboard</h2>
+
+    <p>Trang quản trị hệ thống bán sách trực tuyến SachOnline.</p>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <div class="stat-card bg-book">
+
+            <i class="glyphicon glyphicon-book"></i>
+
+            <h3>@ViewBag.SoSach</h3>
+
+            <span>Tổng số sách</span>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="stat-card bg-topic">
+
+            <i class="glyphicon glyphicon-th-large"></i>
+
+            <h3>@ViewBag.SoChuDe</h3>
+
+            <span>Chủ đề</span>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="stat-card bg-pub">
+
+            <i class="glyphicon glyphicon-briefcase"></i>
+
+            <h3>@ViewBag.SoNXB</h3>
+
+            <span>Nhà xuất bản</span>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <div class="stat-card bg-user">
+
+            <i class="glyphicon glyphicon-user"></i>
+
+            <h3>@ViewBag.SoKhachHang</h3>
+
+            <span>Khách hàng</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-8">
+
+        <div class="welcome-card">
+
+            <h3>
+                Xin chào @(((TranVanCuong.SachOnline.Models.ADMIN)Session["Admin"]).TenDN)
+            </h3>
+
+            <p>
+
+                Chào mừng bạn đến với hệ thống quản trị SachOnline.
+
+                Sử dụng menu bên trái để quản lý Sách, Chủ đề,
+                Nhà xuất bản, Khách hàng và Đơn hàng.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="quick-menu">
+
+            <h4>Truy cập nhanh</h4>
+
+            <a href="@Url.Action("Index","Sach",new { area="Admin"})"
+                class="quick-item">
+
+                📚 Quản lý sách
+
+            </a>
+
+            <a href="#" class="quick-item">
+
+                📂 Quản lý chủ đề
+
+            </a>
+
+            <a href="#" class="quick-item">
+
+                🏢 Nhà xuất bản
+
+            </a>
+
+            <a href="#" class="quick-item">
+
+                🛒 Đơn hàng
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

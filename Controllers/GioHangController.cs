@@ -137,7 +137,13 @@ namespace TranVanCuong.SachOnline.Controllers
         {
             if (Session["TaiKhoan"] == null)
             {
-                return RedirectToAction("DangNhap", "User");
+                return RedirectToAction(
+                    "DangNhap",
+                    "User",
+                    new
+                    {
+                        returnUrl = Url.Action("DatHang", "GioHang")
+                    });
             }
 
             if (Session["GioHang"] == null)

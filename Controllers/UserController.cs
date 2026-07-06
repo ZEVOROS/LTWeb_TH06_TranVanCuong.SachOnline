@@ -10,13 +10,14 @@ namespace TranVanCuong.SachOnline.Controllers
         SachOnlineEntities data = new SachOnlineEntities();
 
         [HttpGet]
-        public ActionResult DangKy()
+        public ActionResult DangKy(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public ActionResult DangKy(FormCollection collection)
+        public ActionResult DangKy(FormCollection collection, string returnUrl)
         {
             string hoTen = collection["HoTen"];
             string tenDN = collection["TenDN"];
@@ -69,22 +70,25 @@ namespace TranVanCuong.SachOnline.Controllers
         }
 
         [HttpGet]
-        public ActionResult DangNhap()
+        public ActionResult DangNhap(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-        public ActionResult DangXuat()
+        public ActionResult DangXuat(string returnUrl)
         {
             Session["TaiKhoan"] = null;
 
-            return View(
-                "Index",
-                "SachOnline"
-            );
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "SachOnline");
         }
 
         [HttpPost]
-        public ActionResult DangNhap(FormCollection collection)
+        public ActionResult DangNhap(FormCollection collection, string returnUrl)
         {
             string tenDN = collection["TenDN"];
             string matKhau = collection["MatKhau"];
@@ -107,11 +111,13 @@ namespace TranVanCuong.SachOnline.Controllers
                 if (kh != null)
                 {
                     Session["TaiKhoan"] = kh;
-                    ViewBag.ThongBao = "Đăng nhập thành công";
-                    return RedirectToAction(
-                    "Index",
-                    "SachOnline"
-                    );
+
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+
+                    return RedirectToAction("Index", "SachOnline");
                 }
                 else
                 {

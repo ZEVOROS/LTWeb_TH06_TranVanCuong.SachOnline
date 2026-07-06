@@ -1,0 +1,171 @@
+﻿@model IEnumerable<TranVanCuong.SachOnline.Models.SACH>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Quản lý sách";
+}
+
+<style>
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+    .table-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    }
+
+    .table thead {
+        background: #1f2937;
+        color: white;
+    }
+
+    .table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .table td {
+        vertical-align: middle !important;
+    }
+
+    .book-img {
+        width: 60px;
+        border-radius: 6px;
+    }
+
+    .btn-action {
+        margin: 2px;
+    }
+</style>
+
+<div class="page-header">
+    @if (TempData["ThongBao"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["ThongBao"]
+        </div>
+    }
+
+    <h2>Quản lý sách</h2>
+
+    <a href="@Url.Action("Create","Sach",new { area="Admin" })"
+       class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span>
+        Thêm sách
+    </a>
+
+</div>
+
+<div class="table-card">
+
+    <table class="table table-hover table-bordered">
+
+        <thead>
+
+            <tr>
+
+                <th width="70">Mã</th>
+
+                <th width="90">Ảnh</th>
+
+                <th>Tên sách</th>
+
+                <th width="130">Giá bán</th>
+
+                <th width="130">Ngày cập nhật</th>
+
+                <th width="150">Thao tác</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td align="center">
+                        @item.MaSach
+                    </td>
+
+                    <td align="center">
+
+                        <img class="book-img"
+                             src="@Url.Content("~/Images/" + item.AnhBia)"
+                             alt="@item.TenSach" />
+
+                    </td>
+
+                    <td>
+
+                        @item.TenSach
+
+                    </td>
+
+                    <td align="right">
+
+                        @String.Format("{0:0,0} VNĐ", item.GiaBan)
+
+                    </td>
+
+                    <td align="center">
+
+                        @String.Format("{0:dd/MM/yyyy}", item.NgayCapNhat)
+
+                    </td>
+
+                    <td align="center">
+
+                        <a href="@Url.Action("Edit", "Sach",
+                             new { area = "Admin", id = item.MaSach })"
+                           class="btn btn-primary btn-sm btn-action">
+
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            Sửa
+
+                        </a>
+
+                        <a href="@Url.Action("Details", "Sach",
+                            new { area = "Admin", id = item.MaSach })"
+                           class="btn btn-info btn-sm btn-action">
+
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                            Chi tiết
+
+                        </a>
+
+                        <a href="@Url.Action("Delete", "Sach",
+                            new { area = "Admin", id = item.MaSach })"
+                           class="btn btn-danger btn-sm btn-action">
+
+                            <span class="glyphicon glyphicon-trash"></span>
+                            Xóa
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

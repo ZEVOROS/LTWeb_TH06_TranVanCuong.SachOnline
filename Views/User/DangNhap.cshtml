@@ -4,45 +4,92 @@
 }
 
 <style>
-    td {
-        height: 40px;
-    }
-
-    .error {
-        color: red;
+    .login-container {
+        max-width: 450px;
+        margin: 50px auto;
     }
 </style>
 
-<h4 style="color:red; text-align:center;">@ViewBag.ThongBao</h4>
+<div class="container login-container">
 
-<h2 style="text-align:center;">ĐĂNG NHẬP</h2>
+    <div class="login-card">
 
-<table align="center">
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary(true)
+        <div class="login-header">
+            <h3>ĐĂNG NHẬP</h3>
+        </div>
 
-        <tr>
-            <td>Tên đăng nhập:</td>
-            <td>
-                @Html.TextBox("TenDN")
-                <span class="error">@ViewData["Err1"]</span>
-            </td>
-        </tr>
+        <div class="login-body">
 
-        <tr>
-            <td>Mật khẩu:</td>
-            <td>
-                @Html.Password("MatKhau")
-                <span class="error">@ViewData["Err2"]</span>
-            </td>
-        </tr>
+            @if (ViewBag.ThongBao != null)
+            {
+                <div class="alert alert-danger alert-custom">
+                    @ViewBag.ThongBao
+                </div>
+            }
 
-        <tr>
-            <td></td>
-            <td>
-                <input type="submit" value="Đăng nhập" />
-            </td>
-        </tr>
-    }
-</table>
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
+
+                <div class="form-group">
+                    <label>Tên đăng nhập</label>
+
+                    @Html.TextBox("TenDN", null,
+                        new
+                        {
+                            @class = "form-control",
+                            placeholder = "Nhập tên đăng nhập"
+                        })
+
+                    <span class="text-danger">
+                        @ViewData["Err1"]
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+
+                    @Html.Password("MatKhau",
+                        null,
+                        new
+                        {
+                            @class = "form-control",
+                            placeholder = "Nhập mật khẩu"
+                        })
+
+                    <span class="text-danger">
+                        @ViewData["Err2"]
+                    </span>
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary btn-login">
+
+                    <span class="glyphicon glyphicon-log-in"></span>
+
+                    Đăng nhập
+
+                </button>
+
+                <div class="register-link">
+
+                    Chưa có tài khoản?
+
+                    <a href="@Url.Action("DangKy",
+                                         "User",
+                                         new { returnUrl = ViewBag.ReturnUrl })">
+
+                        Đăng ký ngay
+
+                    </a>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
