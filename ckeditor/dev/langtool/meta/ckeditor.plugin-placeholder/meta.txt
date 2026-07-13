@@ -1,0 +1,8 @@
+# Copyright (c) 2003-2026, CKSource Holding sp. z o.o. All rights reserved.
+# CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
+
+title = Label for the Placeholder dialog window.
+toolbar = Toolbar button tooltip for the Placeholder feature.
+name = Label for the Placeholder Name field of the Placeholder dialog window.
+invalidName = Error message displayed to the user when the placeholder name is invalid.
+pathName = Label displayed in the Elements Path when a placeholder is selected.

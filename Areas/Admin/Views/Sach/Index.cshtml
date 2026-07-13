@@ -45,8 +45,12 @@
         border-radius: 6px;
     }
 
-    .btn-action {
-        margin: 2px;
+    .btn-group .btn {
+        margin-right: 5px;
+    }
+
+    td {
+        vertical-align: middle !important;
     }
 </style>
 
@@ -129,34 +133,35 @@
 
                     </td>
 
-                    <td align="center">
+                    <td class="text-center" style="white-space: nowrap; width:220px;">
 
-                        <a href="@Url.Action("Edit", "Sach",
-                             new { area = "Admin", id = item.MaSach })"
-                           class="btn btn-primary btn-sm btn-action">
+                        <div class="btn-group" role="group">
 
-                            <span class="glyphicon glyphicon-pencil"></span>
-                            Sửa
+                            <a href="@Url.Action("Edit", "Sach",
+                                new { area = "Admin", id = item.MaSach })"
+                               class="btn btn-primary btn-sm">
 
-                        </a>
+                                <span class="glyphicon glyphicon-pencil"></span> Sửa
 
-                        <a href="@Url.Action("Details", "Sach",
-                            new { area = "Admin", id = item.MaSach })"
-                           class="btn btn-info btn-sm btn-action">
+                            </a>
 
-                            <span class="glyphicon glyphicon-list-alt"></span>
-                            Chi tiết
+                            <a href="@Url.Action("Details", "Sach",
+                                new { area = "Admin", id = item.MaSach })"
+                               class="btn btn-info btn-sm">
 
-                        </a>
+                                <span class="glyphicon glyphicon-list-alt"></span> Chi tiết
 
-                        <a href="@Url.Action("Delete", "Sach",
-                            new { area = "Admin", id = item.MaSach })"
-                           class="btn btn-danger btn-sm btn-action">
+                            </a>
 
-                            <span class="glyphicon glyphicon-trash"></span>
-                            Xóa
+                            <a href="@Url.Action("Delete", "Sach",
+                                new { area = "Admin", id = item.MaSach })"
+                               class="btn btn-danger btn-sm">
 
-                        </a>
+                                <span class="glyphicon glyphicon-trash"></span> Xóa
+
+                            </a>
+
+                        </div>
 
                     </td>
 

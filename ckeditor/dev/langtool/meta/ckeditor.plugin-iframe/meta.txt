@@ -1,0 +1,9 @@
+# Copyright (c) 2003-2026, CKSource Holding sp. z o.o. All rights reserved.
+# CKEditor 4 LTS ("Long Term Support") is available under the terms of the Extended Support Model.
+
+border = Label for the Show frame borders option of the IFrame dialog window.
+noUrl = Error message displayed to the user if one attempts to close the IFrame dialog window without giving the iframe URL.
+scrolling = Label for the Enable scrollbars option of the IFrame dialog window.
+title = Label for the IFrame dialog window.
+toolbar = Toolbar button tooltip for the IFrame feature.
+tabindex = Label for the Remove from tabindex option of the IFrame dialog window.

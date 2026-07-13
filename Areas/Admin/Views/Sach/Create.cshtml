@@ -4,6 +4,8 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
     ViewBag.Title = "Thêm sách";
 }
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckfinder/ckfinder.js"></script>
 
 <h2>Thêm sách mới</h2>
 <hr />
@@ -44,11 +46,13 @@
 
             <div class="form-group">
                 <label>Mô tả</label>
+
                 @Html.TextAreaFor(model => model.MoTa,
                     new
                     {
                         @class = "form-control",
-                        rows = "6"
+                        rows = "6",
+                        id = "mota"
                     })
             </div>
 
@@ -118,3 +122,16 @@
         Quay lại
     </a>
 }
+<script>
+    CKEDITOR.replace("mota", {
+        extraAllowedContent: "span",
+
+        filebrowserBrowseUrl: "/ckfinder/ckfinder.html",
+        filebrowserImageBrowseUrl: "/ckfinder/ckfinder.html?type=Images",
+        filebrowserFlashBrowseUrl: "/ckfinder/ckfinder.html?type=Flash",
+
+        filebrowserUploadUrl: "/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files",
+        filebrowserImageUploadUrl: "/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images",
+        filebrowserFlashUploadUrl: "/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash"
+    });
+</script> 
