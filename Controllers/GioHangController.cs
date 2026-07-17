@@ -162,14 +162,40 @@ namespace TranVanCuong.SachOnline.Controllers
         [HttpPost]
         public ActionResult DatHang(FormCollection f)
         {
-            DONDATHANG ddh = new DONDATHANG();
+            // Kiểm tra đăng nhập
+            if (Session["TaiKhoan"] == null)
+            {
+                return RedirectToAction(
+                    "DangNhap",
+                    "User",
+                    new
+                    {
+                        returnUrl = Url.Action("DatHang", "GioHang")
+                    });
+            }
+
+            // Kiểm tra giỏ hàng
+            if (Session["GioHang"] == null)
+            {
+                return RedirectToAction("Index", "SachOnline");
+            }
+
             KHACHHANG kh = (KHACHHANG)Session["TaiKhoan"];
             List<GioHang> gh = LayGioHang();
+
+            // Nếu giỏ hàng rỗng
+            if (gh.Count == 0)
+            {
+                return RedirectToAction("Index", "SachOnline");
+            }
+
+            DONDATHANG ddh = new DONDATHANG();
 
             ddh.MaKH = kh.MaKH;
             ddh.NgayDat = DateTime.Now;
 
             string ngayGiao = f["NgayGiao"];
+
             if (!string.IsNullOrEmpty(ngayGiao))
             {
                 ddh.NgayGiao = DateTime.Parse(ngayGiao);
@@ -197,9 +223,8 @@ namespace TranVanCuong.SachOnline.Controllers
 
             Session["GioHang"] = null;
 
-            return RedirectToAction("XacNhanDonHang", "GioHang");
+            return RedirectToAction("XacNhanDonHang");
         }
-
         public ActionResult XacNhanDonHang()
         {
             return View();

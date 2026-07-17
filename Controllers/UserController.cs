@@ -2,12 +2,31 @@
 using System.Linq;
 using System.Web.Mvc;
 using TranVanCuong.SachOnline.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace TranVanCuong.SachOnline.Controllers
 {
     public class UserController : Controller
     {
         SachOnlineEntities data = new SachOnlineEntities();
+
+        // Hàm mã hóa MD5
+        public static string GetMD5(string str)
+        {
+            MD5 md5 = MD5.Create();
+            byte[] inputBytes = Encoding.UTF8.GetBytes(str);
+            byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (byte b in hashBytes)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+
+            return sb.ToString();
+        }
 
         [HttpGet]
         public ActionResult DangKy(string returnUrl)
@@ -52,7 +71,10 @@ namespace TranVanCuong.SachOnline.Controllers
 
                 kh.HoTen = hoTen;
                 kh.TaiKhoan = tenDN;
-                kh.MatKhau = matKhau;
+
+                // Mã hóa mật khẩu trước khi lưu
+                kh.MatKhau = GetMD5(matKhau);
+
                 kh.Email = email;
                 kh.DienThoai = dienThoai;
                 kh.DiaChi = diaChi;
@@ -61,12 +83,29 @@ namespace TranVanCuong.SachOnline.Controllers
                     kh.NgaySinh = DateTime.Parse(ngaySinh);
 
                 data.KHACHHANG.Add(kh);
-                data.SaveChanges();
+
+                try
+                {
+                    data.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    var errors = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => $"Thuộc tính: {x.PropertyName} - Lỗi: {x.ErrorMessage}");
+
+                    throw new Exception(string.Join("\n", errors));
+                }
 
                 ViewBag.ThongBao = "Đăng ký thành công. Dữ liệu đã lưu vào database.";
+
+                return RedirectToAction("DangNhap", new
+                {
+                    returnUrl = returnUrl
+                });
             }
 
-            return View("DangNhap");
+            return View();
         }
 
         [HttpGet]
@@ -75,6 +114,7 @@ namespace TranVanCuong.SachOnline.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+
         public ActionResult DangXuat(string returnUrl)
         {
             Session["TaiKhoan"] = null;
@@ -103,9 +143,12 @@ namespace TranVanCuong.SachOnline.Controllers
             }
             else
             {
+                // Mã hóa mật khẩu trước khi kiểm tra
+                string matKhauMD5 = GetMD5(matKhau);
+
                 var kh = data.KHACHHANG.SingleOrDefault(k =>
                     k.TaiKhoan == tenDN &&
-                    k.MatKhau == matKhau
+                    k.MatKhau == matKhauMD5
                 );
 
                 if (kh != null)
@@ -121,10 +164,11 @@ namespace TranVanCuong.SachOnline.Controllers
                 }
                 else
                 {
-                    ViewBag.ThongBao = "Tên đăng nhập hoặc mật khẩu không đúng trong database";
+                    ViewBag.ThongBao = "Tên đăng nhập hoặc mật khẩu không đúng.";
                 }
             }
 
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
     }

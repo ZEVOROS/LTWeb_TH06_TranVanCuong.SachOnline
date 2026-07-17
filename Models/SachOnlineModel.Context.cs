@@ -29,10 +29,10 @@ namespace TranVanCuong.SachOnline.Models
         public virtual DbSet<CHITIETDATHANG> CHITIETDATHANG { get; set; }
         public virtual DbSet<CHUDE> CHUDE { get; set; }
         public virtual DbSet<DONDATHANG> DONDATHANG { get; set; }
-        public virtual DbSet<KHACHHANG> KHACHHANG { get; set; }
         public virtual DbSet<NHAXUATBAN> NHAXUATBAN { get; set; }
         public virtual DbSet<SACH> SACH { get; set; }
         public virtual DbSet<TACGIA> TACGIA { get; set; }
         public virtual DbSet<VIETSACH> VIETSACH { get; set; }
+        public virtual DbSet<KHACHHANG> KHACHHANG { get; set; }
     }
 }

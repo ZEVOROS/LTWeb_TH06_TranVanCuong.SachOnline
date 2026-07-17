@@ -51,10 +51,10 @@
           <Property Name="MaKH" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HoTen" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TaiKhoan" Type="varchar" MaxLength="15" />
-          <Property Name="MatKhau" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="MatKhau" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="DiaChi" Type="nvarchar" MaxLength="50" />
-          <Property Name="DienThoai" Type="varchar" MaxLength="10" />
+          <Property Name="DienThoai" Type="varchar" MaxLength="15" />
           <Property Name="NgaySinh" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="NHAXUATBAN">
@@ -269,21 +269,7 @@
           <Property Name="NgayGiao" Type="DateTime" Precision="0" />
           <Property Name="MaKH" Type="Int32" />
           <NavigationProperty Name="CHITIETDATHANG" Relationship="Self.FK_CTDH_DDH" FromRole="DONDATHANG" ToRole="CHITIETDATHANG" />
-          <NavigationProperty Name="KHACHHANG" Relationship="Self.FK_DDH_KH" FromRole="DONDATHANG" ToRole="KHACHHANG" />
-        </EntityType>
-        <EntityType Name="KHACHHANG">
-          <Key>
-            <PropertyRef Name="MaKH" />
-          </Key>
-          <Property Name="MaKH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TaiKhoan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="MatKhau" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DienThoai" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NgaySinh" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="DONDATHANG" Relationship="Self.FK_DDH_KH" FromRole="KHACHHANG" ToRole="DONDATHANG" />
+          <NavigationProperty Name="KHACHHANG" Relationship="SachOnlineModel.FK_DDH_KH" FromRole="DONDATHANG" ToRole="KHACHHANG" />
         </EntityType>
         <EntityType Name="NHAXUATBAN">
           <Key>
@@ -372,18 +358,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DDH_KH">
-          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="0..1" />
-          <End Role="DONDATHANG" Type="Self.DONDATHANG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="KHACHHANG">
-              <PropertyRef Name="MaKH" />
-            </Principal>
-            <Dependent Role="DONDATHANG">
-              <PropertyRef Name="MaKH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sach_NXB">
           <End Role="NHAXUATBAN" Type="Self.NHAXUATBAN" Multiplicity="0..1" />
           <End Role="SACH" Type="Self.SACH" Multiplicity="*" />
@@ -425,7 +399,6 @@
           <EntitySet Name="CHITIETDATHANG" EntityType="Self.CHITIETDATHANG" />
           <EntitySet Name="CHUDE" EntityType="Self.CHUDE" />
           <EntitySet Name="DONDATHANG" EntityType="Self.DONDATHANG" />
-          <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" />
           <EntitySet Name="NHAXUATBAN" EntityType="Self.NHAXUATBAN" />
           <EntitySet Name="SACH" EntityType="Self.SACH" />
           <EntitySet Name="TACGIA" EntityType="Self.TACGIA" />
@@ -442,10 +415,6 @@
             <End Role="CHUDE" EntitySet="CHUDE" />
             <End Role="SACH" EntitySet="SACH" />
           </AssociationSet>
-          <AssociationSet Name="FK_DDH_KH" Association="Self.FK_DDH_KH">
-            <End Role="KHACHHANG" EntitySet="KHACHHANG" />
-            <End Role="DONDATHANG" EntitySet="DONDATHANG" />
-          </AssociationSet>
           <AssociationSet Name="FK_Sach_NXB" Association="Self.FK_Sach_NXB">
             <End Role="NHAXUATBAN" EntitySet="NHAXUATBAN" />
             <End Role="SACH" EntitySet="SACH" />
@@ -458,7 +427,38 @@
             <End Role="TACGIA" EntitySet="TACGIA" />
             <End Role="VIETSACH" EntitySet="VIETSACH" />
           </AssociationSet>
+          <EntitySet Name="KHACHHANG" EntityType="SachOnlineModel.KHACHHANG" />
+          <AssociationSet Name="FK_DDH_KH" Association="SachOnlineModel.FK_DDH_KH">
+            <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+            <End Role="DONDATHANG" EntitySet="DONDATHANG" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="KHACHHANG">
+          <Key>
+            <PropertyRef Name="MaKH" />
+          </Key>
+          <Property Name="MaKH" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoTen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TaiKhoan" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="MatKhau" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DiaChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DienThoai" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="DONDATHANG" Relationship="SachOnlineModel.FK_DDH_KH" FromRole="KHACHHANG" ToRole="DONDATHANG" />
+        </EntityType>
+        <Association Name="FK_DDH_KH">
+          <End Type="SachOnlineModel.KHACHHANG" Role="KHACHHANG" Multiplicity="0..1" />
+          <End Type="SachOnlineModel.DONDATHANG" Role="DONDATHANG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MaKH" />
+            </Principal>
+            <Dependent Role="DONDATHANG">
+              <PropertyRef Name="MaKH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -507,20 +507,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="KHACHHANG">
-            <EntityTypeMapping TypeName="SachOnlineModel.KHACHHANG">
-              <MappingFragment StoreEntitySet="KHACHHANG">
-                <ScalarProperty Name="MaKH" ColumnName="MaKH" />
-                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
-                <ScalarProperty Name="TaiKhoan" ColumnName="TaiKhoan" />
-                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
-                <ScalarProperty Name="DienThoai" ColumnName="DienThoai" />
-                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="NHAXUATBAN">
             <EntityTypeMapping TypeName="SachOnlineModel.NHAXUATBAN">
               <MappingFragment StoreEntitySet="NHAXUATBAN">
@@ -564,6 +550,20 @@
                 <ScalarProperty Name="MaSach" ColumnName="MaSach" />
                 <ScalarProperty Name="VaiTro" ColumnName="VaiTro" />
                 <ScalarProperty Name="ViTri" ColumnName="ViTri" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHACHHANG">
+            <EntityTypeMapping TypeName="SachOnlineModel.KHACHHANG">
+              <MappingFragment StoreEntitySet="KHACHHANG">
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="DienThoai" ColumnName="DienThoai" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="TaiKhoan" ColumnName="TaiKhoan" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="MaKH" ColumnName="MaKH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
